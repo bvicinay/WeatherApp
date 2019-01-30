@@ -1,9 +1,19 @@
 package com.example.weatherapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.icu.text.DecimalFormat;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +50,64 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+    }
+
+    /*
+    public void notify(View view) {
+
+        //Get an instance of NotificationManager//
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.clear)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+
+        // Gets an instance of the NotificationManager service//
+
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // When you issue multiple notifications about the same type of event,
+        // it’s best practice for your app to try to update an existing notification
+        // with this new information, rather than immediately creating a new notification.
+        // If you want to update this notification at a later date, you need to assign it an ID.
+        // You can then use this ID whenever you issue a subsequent notification.
+        // If the previous notification is still visible, the system will update this existing notification,
+        // rather than create a new one. In this example, the notification’s ID is 001//
+
+        mNotificationManager.notify(0, mBuilder.build());
+
+    }*/
+
+    public void notify(View view) {
+
+        DecimalFormat df = new DecimalFormat("#.###");
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String subject = "The Weather in my city is:";
+        String body = "The temperature is " + lastResult[0] + " and it is " + lastResult[1] + ".";
+                /*
+                "Key:" + (curr.getKey())
+                + "\nDate : " + (curr.getDateStr() != null ? curr.getDateStr() : "No Date")
+                + "\nLocation : " + (curr.getLocation_type() != null ?
+                curr.getLocation_type() : "No Type")
+                + "\nZip Code : " + (curr.getZip())
+                + "\nAddress : " + (curr.getStreet() != null ? curr.getStreet()
+                : "No street")
+                + "\nCity : " + (curr.getCity() != null ? curr.getCity() : "No city")
+                + "\nBorough : " + (curr.getBorough() != null ? curr.getBorough()
+                : "No Borough")
+                + "\nLatitude : " + df.format(loc.getLatitude())
+                + "\nLongitude : " + df.format(loc.getLongitude());*/
+
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(shareIntent, "Share Your Weather: "));
 
 
     }
