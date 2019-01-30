@@ -17,7 +17,7 @@
             android:layout_width="163dp"
             android:layout_height="156dp"
             android:layout_marginTop="100sp"
-            android:="@+id/w_icon"
+            android:="@+id/w_image"
             android:src="@drawable/clear"
             android:tint="@color/colorAccent" />
 
