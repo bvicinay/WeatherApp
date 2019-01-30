@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView weatherDescription;
     private TextView weatherTemp;
+    private ImageView weatherIcon;
 
     private String[] lastResult;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         weatherDescription = (TextView)findViewById(R.id.w_description);
         weatherTemp = (TextView)findViewById(R.id.w_temp);
+        weatherIcon = (ImageView)findViewById(R.id.w_image);
 
         GetWeatherTask retrieveWeather = new GetWeatherTask();
         retrieveWeather.execute("Atlanta");
@@ -93,6 +96,27 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "result occured");
             weatherDescription.setText(result[1]);
             weatherTemp.setText(result[0]+" F");
+            // Logic to pick image
+            String description = result[1];
+            String imageType = "";  // clouds | snow | clear | rain | drizzle
+            if (description.contains("clouds")) {
+                imageType = "clouds";
+                weatherIcon.setImageResource(R.drawable.clouds);
+            } else if (description.contains("snow")) {
+                imageType = "snow";
+                weatherIcon.setImageResource(R.drawable.snow);
+            } else if (description.contains("clear")) {
+                imageType = "clear";
+                weatherIcon.setImageResource(R.drawable.clear);
+            } else if (description.contains("rain")) {
+                imageType = "rain";
+                weatherIcon.setImageResource(R.drawable.rain);
+            } else if (description.contains("drizzle")) {
+                weatherIcon.setImageResource(R.drawable.drizzle);
+
+            }
+
+
         }
     }
     private void printException(Exception e) throws Exception{
